@@ -53,7 +53,7 @@ pipeline {
 				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
-		stage ('Run Ansible Playbook to create Docker Image') {
+		stage ('Docker Image') {
 			steps{
 			      sshPublisher(publishers: 
 				 [sshPublisherDesc(configName: 'ansible', 
