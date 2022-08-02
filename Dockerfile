@@ -1,3 +1,3 @@
 FROM tomcat:latest
 
-COPY ./webapp.war /usr/local/tomcat/webapps
+COPY /opt/docker/webapp/target/webapp.war /usr/local/tomcat/webapps
