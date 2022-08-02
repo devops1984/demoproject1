@@ -53,6 +53,22 @@ pipeline {
 				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
+		stage('Transfer artifact to Bootstrap Machine') {                               	
+                    steps {
+			   sshPublisher(publishers: 
+			      [sshPublisherDesc(configName: 'jenkins', 
+				  transfers: [sshTransfer(cleanRemote: false, 
+				  excludes: '', 
+				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/k8s-job/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "create-demoapp-image.yml" --exclude "Dockerfile" --exclude "deployment.yml" --exclude "README.md" --exclude "server" --exclude "service.yml" --exclude "webapp" deploy@172.31.12.188:/opt/' ,
+				                
+				  execTimeout: 120000, flatten: false, 
+				  makeEmptyDirs: false, noDefaultExcludes: false, 
+				  patternSeparator: '[, ]+', 
+				  remoteDirectory: '', remoteDirectorySDF: false, 
+				  removePrefix: '', sourceFiles: '')], 
+				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+                       }
+                }
 		stage ('Docker Image') {
 			steps{
 			      sshPublisher(publishers: 
