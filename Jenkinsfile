@@ -41,7 +41,7 @@ pipeline {
                     steps {
 			   sshPublisher(publishers: 
 			      [sshPublisherDesc(configName: 'jenkins', 
-				  transfers: [sshTransfer(cleanRemote: true, 
+				  transfers: [sshTransfer(cleanRemote: false, 
 				  excludes: '', 
 				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/k8s-job/webapp/target/*.war ansadmin@172.31.8.42:/opt/docker/webapp.war', 
 				  execTimeout: 120000, flatten: false, 
