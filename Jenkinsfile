@@ -37,13 +37,14 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
-		stage('Transfer artifact to Ansible') {
 		                                        def remote = [:]
                                                         remote.name = 'jenkins'
                                                         remote.host = '54.176.45.61'
                                                         remote.user = 'jenkins'
                                                         remote.password = 'jenkins'
-                                                        remote.allowAnyHosts = true	
+                                                        remote.allowAnyHosts = true 
+		stage('Transfer artifact to Ansible') {
+		                                        	
                     steps {
 			    sshCommand('rsync -avh  /var/lib/jenkins/workspace/k8s-job/webapp/target/*.war ansadmin@172.31.8.42:/opt/docker/webapp.war')
 			   /* sshPublisher(publishers: 
