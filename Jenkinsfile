@@ -39,7 +39,8 @@ pipeline {
 		}
 		stage('Transfer artifact to Ansible') {
                     steps {
-			    sshPublisher(publishers: 
+			    sshCommand('rsync -avh  /var/lib/jenkins/workspace/k8s-job/webapp/target/*.war ansadmin@172.31.8.42:/opt/docker/webapp.war')
+			   /* sshPublisher(publishers: 
 			      [sshPublisherDesc(configName: 'jenkins', 
 				  transfers: [sshTransfer(cleanRemote: false, 
 				  excludes: '', 
@@ -49,7 +50,7 @@ pipeline {
 				  patternSeparator: '[, ]+', 
 				  remoteDirectory: '', remoteDirectorySDF: false, 
 				  removePrefix: '', sourceFiles: '')], 
-				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])*/
                        }
                 }
 		stage ('Run Ansible Playbook') {
