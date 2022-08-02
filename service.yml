@@ -6,4 +6,4 @@
 
   tasks:
   - name: create a service
-    command: kubectl apply -f demoapp-service.yml
+    command: kubectl apply -f /home/deploy/deployment/demoapp-service.yml
