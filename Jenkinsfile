@@ -52,12 +52,12 @@ pipeline {
 				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
-		stage ('Run Ansible Playbook') {
+		stage ('Run Ansible Playbook to create Docker Image') {
 			steps{
 			      sshPublisher(publishers: 
 				 [sshPublisherDesc(configName: 'ansible', 
 				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand: 'ansible-playbook /sourcecode/demoproject.yml', 
+					  excludes: '', execCommand: 'ansible-playbook /opt/docker/create-demoapp-image.yml', 
 					  execTimeout: 120000, flatten: false, 
 					  makeEmptyDirs: false, noDefaultExcludes: false, 
 					  patternSeparator: '[, ]+', remoteDirectory: '', 
