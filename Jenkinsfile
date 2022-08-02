@@ -82,13 +82,19 @@ pipeline {
 					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                           }
 		}
-		/*stage('Publish Docker Image to DockerHub') {
-                    steps {
-			    withDockerRegistry([credentialsID: "dockerHub" , url: ""])	{	    
-			     sh 'docker push k2r2t2/demoapp:latest'
-			    }
-                       }
-                }*/
-		
+		stage ('Deploy') {
+			steps{
+			      sshPublisher(publishers: 
+				 [sshPublisherDesc(configName: 'ansible', 
+				     transfers: [sshTransfer(cleanRemote: false, 
+					  excludes: '', execCommand: 'ansible-playbook -i hosts /opt/docker/deployment.yml'
+							              'ansible-playbook -i hosts /opt/docker/service.yml' , 
+					  execTimeout: 120000, flatten: false, 
+					  makeEmptyDirs: false, noDefaultExcludes: false, 
+					  patternSeparator: '[, ]+', remoteDirectory: '', 
+					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
+					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+                          }
+		}		
 	}
 }   
