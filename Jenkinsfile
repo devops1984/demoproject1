@@ -44,7 +44,7 @@ pipeline {
 				  transfers: [sshTransfer(cleanRemote: false, 
 				  excludes: '', 
 				  execCommand: "rsync -avh  /var/lib/jenkins/workspace/k8s-job/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "demoapp-deploy.yml" --exclude "demoapp-service.yml" --exclude "README.md" --exclude "server" --exclude "target" ansadmin@172.31.8.42:/opt/docker/", 
-				                "rsync -avh  /var/lib/jenkins/workspace/k8s-job/webapp/target/*.war ansadmin@172.31.8.42:/opt/docker/webapp.war "
+				                "rsync -avh  /var/lib/jenkins/workspace/k8s-job/webapp/target/*.war ansadmin@172.31.8.42:/opt/docker/webapp.war ",
 				  execTimeout: 120000, flatten: false, 
 				  makeEmptyDirs: false, noDefaultExcludes: false, 
 				  patternSeparator: '[, ]+', 
