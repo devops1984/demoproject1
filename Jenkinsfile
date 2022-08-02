@@ -37,19 +37,11 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
-		                                        def remote = [:]
-                                                        remote.name = 'jenkins'
-                                                        remote.host = '54.176.45.61'
-                                                        remote.user = 'jenkins'
-                                                        remote.password = 'jenkins'
-                                                        remote.allowAnyHosts = true 
-		stage('Transfer artifact to Ansible') {
-		                                        	
+		stage('Transfer artifact to Ansible') {                               	
                     steps {
-			    sshCommand('rsync -avh  /var/lib/jenkins/workspace/k8s-job/webapp/target/*.war ansadmin@172.31.8.42:/opt/docker/webapp.war')
-			   /* sshPublisher(publishers: 
+			   sshPublisher(publishers: 
 			      [sshPublisherDesc(configName: 'jenkins', 
-				  transfers: [sshTransfer(cleanRemote: false, 
+				  transfers: [sshTransfer(cleanRemote: true, 
 				  excludes: '', 
 				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/k8s-job/webapp/target/*.war ansadmin@172.31.8.42:/opt/docker/webapp.war', 
 				  execTimeout: 120000, flatten: false, 
@@ -57,7 +49,7 @@ pipeline {
 				  patternSeparator: '[, ]+', 
 				  remoteDirectory: '', remoteDirectorySDF: false, 
 				  removePrefix: '', sourceFiles: '')], 
-				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])*/
+				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
 		stage ('Run Ansible Playbook') {
