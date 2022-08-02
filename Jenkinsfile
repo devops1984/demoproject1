@@ -59,7 +59,7 @@ pipeline {
 			      [sshPublisherDesc(configName: 'jenkins', 
 				  transfers: [sshTransfer(cleanRemote: false, 
 				  excludes: '', 
-				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/k8s-job/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "create-demoapp-image.yml" --exclude "Dockerfile" --exclude "deployment.yml" --exclude "README.md" --exclude "server" --exclude "service.yml" --exclude "webapp" deploy@172.31.12.188:/opt/' ,
+				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/k8s-job/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "create-demoapp-image.yml" --exclude "Dockerfile" --exclude "deployment.yml" --exclude "README.md" --exclude "server" --exclude "service.yml" --exclude "webapp" root@172.31.12.188:/opt/' ,
 				                
 				  execTimeout: 120000, flatten: false, 
 				  makeEmptyDirs: false, noDefaultExcludes: false, 
