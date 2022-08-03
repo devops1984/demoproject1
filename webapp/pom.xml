@@ -6,13 +6,13 @@
   <parent>
     <groupId>com.example.maven-project</groupId>
     <artifactId>maven-project</artifactId>
-    <version>1.0.${v}</version>
+    <version>1.0.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>webapp</artifactId>
   <packaging>war</packaging>
-  <name>webapp-${version}</name>
+  <name>webapp</name>
   <description>Webapp</description>
 
   <build>
