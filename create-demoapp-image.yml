@@ -4,25 +4,25 @@
 
   tasks:
   - name: create docker image using war file
-    command: docker image build -t demo-image:v1.$BUILD_ID .
+    command: docker image build -t $JOB_NAME:v1.$BUILD_ID .
     args:
       chdir: /opt/docker
 
   - name: create tag to image
-    command: docker image tag demo-image:v1.$BUILD_ID k2r2t2/demo-image:v1.$BUILD_ID
+    command: docker image tag $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:v1.$BUILD_ID
 
   - name: create tag latest to image
-    command: docker image tag demo-image:v1.$BUILD_ID k2r2t2/demo-image:latest
+    command: docker image tag $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:latest
     
   - name: push image on to dockerhub
-    command: docker image push k2r2t2/demo-image:v1.$BUILD_ID
+    command: docker image push k2r2t2/$JOB_NAME:v1.$BUILD_ID
 
   - name: push image with latest tag on to dockerhub
-    command: docker image push k2r2t2/demo-image:latest
+    command: docker image push k2r2t2/$JOB_NAME:latest
     
   - name: remove old image on dockerhub
-    command: docker image rmi demo-image:v1.$BUILD_ID k2r2t2/demo-image:v1.$BUILD_ID k2r2t2/demo-image:latest
+    command: docker image rmi $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:latest
     
   - name: remove docker images form ansible server
-    command: docker rmi demo-image:latest k2r2t2/demo-image
+    command: docker rmi $JOB_NAME:latest k2r2t2/$JOB_NAME
     ignore_errors: yes
