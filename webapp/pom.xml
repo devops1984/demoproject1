@@ -12,7 +12,7 @@
 
   <artifactId>webapp</artifactId>
   <packaging>war</packaging>
-  <name>webapp.${version}</name>
+  <name>webapp-${version}</name>
   <description>Webapp.</description>
 
   <build>
