@@ -7,6 +7,7 @@ spec:
     matchLabels:
       app: demoapp-project
   replicas: 2
+  revisionHistoryLimit: 0
   strategy:
     type: RollingUpdate
     rollingUpdate:
