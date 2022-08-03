@@ -4,25 +4,16 @@
 
   tasks:
   - name: create docker image using war file
-    command: docker image build -t $JOB_NAME:v1.$BUILD_ID .
+    command: docker build -t demo-image:latest .
     args:
       chdir: /opt/docker
 
   - name: create tag to image
-    command: docker image tag $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:v1.$BUILD_ID
+    command: docker tag demo-image k2r2t2/demo-image
 
-  - name: create tag latest to image
-    command: docker image tag $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:latest
-    
   - name: push image on to dockerhub
-    command: docker image push k2r2t2/$JOB_NAME:v1.$BUILD_ID
+    command: docker push k2r2t2/demo-image
 
-  - name: push image with latest tag on to dockerhub
-    command: docker image push k2r2t2/$JOB_NAME:latest
-    
-  - name: remove old image on dockerhub
-    command: docker image rmi $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:latest
-    
   - name: remove docker images form ansible server
-    command: docker rmi $JOB_NAME:latest k2r2t2/$JOB_NAME
+    command: docker rmi demo-image:latest k2r2t2/demo-image
     ignore_errors: yes
