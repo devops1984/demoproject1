@@ -95,18 +95,5 @@ pipeline {
 					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                           }
 		}	
-		stage ('Deploy Service') {
-			steps{
-			      sshPublisher(publishers: 
-				 [sshPublisherDesc(configName: 'ansible', 
-				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand:  'ansible-playbook -i hosts /opt/docker/service.yml', 
-					  execTimeout: 120000, flatten: false, 
-					  makeEmptyDirs: false, noDefaultExcludes: false, 
-					  patternSeparator: '[, ]+', remoteDirectory: '', 
-					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
-					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-                          }
-		}		
 	}
 }   
