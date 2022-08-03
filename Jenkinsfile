@@ -24,7 +24,7 @@ pipeline {
 				     [
 					     artifactId: 'webapp', 
 					     classifier: '', 
-					     file: 'webapp/target/webapp.war', 
+					     file: 'webapp/target/*.war', 
 					     type: 'war'
 				     ]
 			     ], 
@@ -34,7 +34,7 @@ pipeline {
 				     nexusVersion: 'nexus3', 
 				     protocol: 'http', 
 				     repository: 'demo-app', 
-				     version: '1.0.0'
+				     version: '1.0.${BUILD_NUMBER}'
 			}
 		}
 		stage('Transfer artifact to Ansible') {                               	
