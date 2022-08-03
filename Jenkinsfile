@@ -82,7 +82,7 @@ pipeline {
 					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                           }
 		}
-		stage ('Deploy Deployment') {
+		stage ('Deployment') {
 			steps{
 			      sshPublisher(publishers: 
 				 [sshPublisherDesc(configName: 'ansible', 
