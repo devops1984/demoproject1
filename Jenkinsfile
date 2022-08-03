@@ -6,7 +6,7 @@ pipeline {
 	 stages {
                 stage('Maven Build'){
 		    steps{
-			     sh " mvn clean package"   
+			     sh " mvn clean package -Dv=${BUILD_NUMBER}"   
 			}
 		}
 		 stage('Sonar Analysis') {
