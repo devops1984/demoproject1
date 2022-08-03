@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: demoapp-project
-        image: k2r2t2/k8s-job
+        image: k2r2t2/demo-app
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
