@@ -14,7 +14,9 @@ pipeline {
 		 stage('Sonar Analysis') {
                      steps {
                       withSonarQubeEnv('Sonarqube') {
-                             sh " mvn sonar:sonar "
+                               sh " mvn sonar:sonar \
+			       -Dsonar.host.url=http://54.183.145.72:9000 \
+			       -Dsonar.login=sqa_89d8d3702cc95b24efc28fdcff0c8494fa83fbd2"
 			         
                              }
                      }
