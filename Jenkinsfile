@@ -11,7 +11,7 @@ pipeline {
 			     sh " mvn clean package -Dv=${BUILD_NUMBER}"   
 			}
 		}
-		 stage('Sonar Analysis') {
+		/* stage('Sonar Analysis') {
                      steps {
                       withSonarQubeEnv('Sonarqube') {
                                sh " mvn sonar:sonar \
@@ -21,7 +21,7 @@ pipeline {
 			         
                              }
                      }
-               }
+               }*/
 		stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
