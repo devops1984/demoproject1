@@ -2,6 +2,8 @@ pipeline {
     agent any
 	environment {
 	    PATH = "$PATH:/usr/share/maven/bin"
+	    imagename = "k2r2t2/demoproject"
+	    dockerImage = ""	
 	}
 	 stages {
                 stage('Maven Build'){
@@ -37,62 +39,29 @@ pipeline {
 				     version: '1.0.${BUILD_NUMBER}'
 			}
 		}
-		stage('Transfer artifact to Ansible') {                               	
+		stage('Build Image') {                               	
                     steps {
-			   sshPublisher(publishers: 
-			      [sshPublisherDesc(configName: 'jenkins', 
-				  transfers: [sshTransfer(cleanRemote: false, 
-				  excludes: '', 
-				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/k8s-job/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "demoapp-deploy.yml" --exclude "demoapp-service.yml" --exclude "README.md" --exclude "server"  ansadmin@172.31.8.42:/opt/docker/' ,
-				                
-				  execTimeout: 120000, flatten: false, 
-				  makeEmptyDirs: false, noDefaultExcludes: false, 
-				  patternSeparator: '[, ]+', 
-				  remoteDirectory: '', remoteDirectorySDF: false, 
-				  removePrefix: '', sourceFiles: '')], 
-				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+			    script {
+				 dockerImage = docker.build imagename
+			    }
                        }
                 }
-		stage('Transfer artifact to Bootstrap Machine') {                               	
+		stage('Push Image') {   
+			environment {
+				registryCredential = 'dockerhub'
+			}
                     steps {
-			   sshPublisher(publishers: 
-			      [sshPublisherDesc(configName: 'jenkins', 
-				  transfers: [sshTransfer(cleanRemote: false, 
-				  excludes: '', 
-				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/k8s-job/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "create-demoapp-image.yml" --exclude "Dockerfile" --exclude "deployment.yml" --exclude "README.md" --exclude "server" --exclude "service.yml" --exclude "webapp" --exclude "target" deploy@172.31.12.188:/home/deploy/deployment' ,
-				                
-				  execTimeout: 120000, flatten: false, 
-				  makeEmptyDirs: false, noDefaultExcludes: false, 
-				  patternSeparator: '[, ]+', 
-				  remoteDirectory: '', remoteDirectorySDF: false, 
-				  removePrefix: '', sourceFiles: '')], 
-				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+			    script {
+				    docker.withRegistry( 'https://registry.hub.docker.com' , registryCredential ){
+					    dockerImage.push("latest")
+				    }
+			    }   
                        }
                 }
-		stage ('Docker Image') {
-			steps{
-			      sshPublisher(publishers: 
-				 [sshPublisherDesc(configName: 'ansible', 
-				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand: 'ansible-playbook -i hosts /opt/docker/create-demoapp-image.yml', 
-					  execTimeout: 120000, flatten: false, 
-					  makeEmptyDirs: false, noDefaultExcludes: false, 
-					  patternSeparator: '[, ]+', remoteDirectory: '', 
-					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
-					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-                          }
-		}
 		stage ('Deployment') {
 			steps{
-			      sshPublisher(publishers: 
-				 [sshPublisherDesc(configName: 'ansible', 
-				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand: 'ansible-playbook -i hosts /opt/docker/deployment.yml', 
-					  execTimeout: 120000, flatten: false, 
-					  makeEmptyDirs: false, noDefaultExcludes: false, 
-					  patternSeparator: '[, ]+', remoteDirectory: '', 
-					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
-					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+				script{
+				    kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubernetes")
                           }
 		}	
 	}
