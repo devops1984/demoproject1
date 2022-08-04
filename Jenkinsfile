@@ -16,7 +16,7 @@ pipeline {
                       withSonarQubeEnv('Sonarqube') {
                              sh " mvn sonar:sonar \
 			          -Dsonar.host.url=http://54.183.145.72:9000 \
-			          -Dsonar.login=sqa_3c21c782f53425c2ca8158be94c88b0c642c4622"
+			          -Dsonar.login=sqa_89d8d3702cc95b24efc28fdcff0c8494fa83fbd2"
                              }
                      }
                }
