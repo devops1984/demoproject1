@@ -70,7 +70,7 @@ pipeline {
 		stage ('transfer yml file') {
 			steps{
 			      sshPublisher(publishers: 
-				 [sshPublisherDesc(configName: 'deploy', 
+				 [sshPublisherDesc(configName: 'jenkins', 
 				     transfers: [sshTransfer(cleanRemote: false, 
 					  excludes: '', execCommand: 'sudo scp  /var/lib/jenkins/workspace/demoproject/deployment.yml  deploy@172.31.12.188:/home/deploy/demoproject', 
 					  execTimeout: 120000, flatten: false, 
