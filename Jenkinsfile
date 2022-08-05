@@ -67,7 +67,7 @@ pipeline {
                           }
 		}	
 	}*/
-		stage ('Deployment') {
+		stage ('transfer yml file') {
 			steps{
 			      sshPublisher(publishers: 
 				 [sshPublisherDesc(configName: 'deploy', 
