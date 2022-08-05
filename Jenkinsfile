@@ -69,9 +69,9 @@ pipeline {
 	}*/
 		stage ('Deployment') {
 			steps{
-		           withCredentials([string(credentialsId: 'EKSPASSWD', variable: 'EKSVAR')]) {
-                                  sh 'sshpass -p "$EKSPASSWD" ssh -tt -o StrictHostKeyChecking=no deploy@54.176.11.123'
-                                      }                   	
+		           sshagent(['eksdeploy']) {
+                                     sh 'ssh -o StrictHostKeyChecking=no -l deploy 172.31.12.188 uname -a'
+                                  }                  	
 	                    }
                  }   
          }
