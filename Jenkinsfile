@@ -72,7 +72,7 @@ pipeline {
 			      sshPublisher(publishers: 
 				 [sshPublisherDesc(configName: 'deploy', 
 				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand: 'scp  /var/lib/jenkins/workspace/demoproject/deployment.yml  deploy@172.31.12.188:/home/deploy/demoproject', 
+					  excludes: '', execCommand: 'sudo scp  /var/lib/jenkins/workspace/demoproject/deployment.yml  deploy@172.31.12.188:/home/deploy/demoproject', 
 					  execTimeout: 120000, flatten: false, 
 					  makeEmptyDirs: false, noDefaultExcludes: false, 
 					  patternSeparator: '[, ]+', remoteDirectory: '', 
