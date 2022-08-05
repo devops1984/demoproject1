@@ -70,7 +70,7 @@ pipeline {
 		stage ('Deployment') {
 			steps{
 		           withCredentials([string(credentialsId: 'ekscluster', variable: 'EKSPASSWD')]) {
-                                  sshpass -p "$ekscluster" ssh -o StrictHostKeyChecking=no deploy@54.176.11.123
+                                  sshpass -p "$EKSPASSWD" ssh -o StrictHostKeyChecking=no deploy@54.176.11.123
                                       }                   	
 	                    }
                  }   
