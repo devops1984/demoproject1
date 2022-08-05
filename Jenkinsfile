@@ -60,12 +60,18 @@ pipeline {
 			    }   
                        }
                 }
-		stage ('Deployment') {
+		/*stage ('Deployment') {
 			steps{
 				script{
 				    kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubernetes")
                           }
 		}	
+	}*/
+		stage ('Deployment') {
+			steps{
+				sshagent(['kubedeployer']) {
+                                 sh 'ssh -o StrictHostKeyChecking=no -l deploy 3.101.43.249 uname -a'
+                                }	
 	}
     }   
 }
