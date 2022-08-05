@@ -72,7 +72,7 @@ pipeline {
 			      sshPublisher(publishers: 
 				 [sshPublisherDesc(configName: 'jenkins', 
 				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand: 'rsync -avh  /var/lib/jenkins/workspace/demoproject/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "Dockerfile" --exclude "webapp" --exclude "README.md" --exclude "server"  deploy@172.31.12.188:/home/deploy/demoproject', 
+					  excludes: '', execCommand: 'rsync -avh  /var/lib/jenkins/workspace/test1/* --exclude "pom.xml" --exclude "Jenkinsfile" --exclude "Dockerfile" --exclude "webapp" --exclude "README.md" --exclude "server"  deploy@172.31.12.188:/home/deploy/demoproject', 
 					  execTimeout: 120000, flatten: false, 
 					  makeEmptyDirs: false, noDefaultExcludes: false, 
 					  patternSeparator: '[, ]+', remoteDirectory: '', 
