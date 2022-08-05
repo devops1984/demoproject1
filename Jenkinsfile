@@ -69,10 +69,10 @@ pipeline {
 	}*/
 		stage ('Deployment') {
 			steps{
-				sshagent(['kubedeployer']) {
-                                 sh 'ssh -o StrictHostKeyChecking=no -l deploy 3.101.43.249 uname -a'
-                                }	
-	}
-    }   
-}
+		           withCredentials([string(credentialsId: 'ekscluster', variable: 'EKSPASSWD')]) {
+                                  sshpass -p "$ekscluster" ssh -o StrictHostKeyChecking=no deploy@54.176.11.123
+                                      }                   	
+	                    }
+                 }   
+         }
 }
