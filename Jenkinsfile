@@ -69,10 +69,29 @@ pipeline {
 	}*/
 		stage ('Deployment') {
 			steps{
-		           sshagent(['eksdeploy']) {
-                                     sh 'ssh -o StrictHostKeyChecking=no -l deploy 172.31.12.188 uname -a'
-                                  }                  	
-	                    }
-                 }   
-         }
-}
+			      sshPublisher(publishers: 
+				 [sshPublisherDesc(configName: 'deploy', 
+				     transfers: [sshTransfer(cleanRemote: false, 
+					  excludes: '', execCommand: 'scp  /var/lib/jenkins/workspace/demoproject/deployment.yml  deploy@172.31.12.188:/home/deploy/demoproject', 
+					  execTimeout: 120000, flatten: false, 
+					  makeEmptyDirs: false, noDefaultExcludes: false, 
+					  patternSeparator: '[, ]+', remoteDirectory: '', 
+					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
+					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+                          }
+		 }	
+		stage ('Deployment') {
+			steps{
+			      sshPublisher(publishers: 
+				 [sshPublisherDesc(configName: 'deploy', 
+				     transfers: [sshTransfer(cleanRemote: false, 
+					  excludes: '', execCommand: 'kubectl apply -f /home/deploy/demoproject/deployment.yml', 
+					  execTimeout: 120000, flatten: false, 
+					  makeEmptyDirs: false, noDefaultExcludes: false, 
+					  patternSeparator: '[, ]+', remoteDirectory: '', 
+					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
+					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+                          }
+		 }	 
+          }
+ }
