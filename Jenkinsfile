@@ -60,14 +60,14 @@ pipeline {
 			    }   
                        }
                 }
-		/*stage ('Deployment') {
+		stage ('Deployment') {
 			steps{
 				script{
 				    kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubernetes")
                           }
 		}	
-	}*/
-		stage ('transfer yml file') {
+	}
+		/*stage ('transfer yml file') {
 			steps{
 			      sshPublisher(publishers: 
 				 [sshPublisherDesc(configName: 'jenkins', 
@@ -92,6 +92,6 @@ pipeline {
 					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
 					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                           }
-		 }	 
+		 }*/	 
           } 
  }
