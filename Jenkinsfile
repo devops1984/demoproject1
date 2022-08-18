@@ -21,7 +21,7 @@ pipeline {
 			         
                              }
                      }
-               }*/
+               }
 		stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
@@ -40,7 +40,7 @@ pipeline {
 				     repository: 'demo-app', 
 				     version: '1.0.${BUILD_NUMBER}'
 			}
-		}
+		}*/
 		stage('Build Image') {                               	
                     steps {
 			    script {
